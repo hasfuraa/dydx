@@ -84,7 +84,7 @@ def signup(request):
         if form.is_valid():
             user_model = get_user_model()
             email = form.cleaned_data['email'].strip().lower()
-            username = form.cleaned_data['username'].strip()
+            username = form.cleaned_data['username'].strip() or email
             password = form.cleaned_data['password']
             if user_model.objects.filter(username=username).exists():
                 return render(request, 'registration/signup.html', {'form': form, 'error': 'Username already taken.'})

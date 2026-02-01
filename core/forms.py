@@ -79,7 +79,7 @@ class AppealMessageForm(forms.ModelForm):
 
 class StudentSignUpForm(forms.Form):
     email = forms.EmailField()
-    username = forms.CharField(max_length=150)
+    username = forms.CharField(max_length=150, required=False)
     password = forms.CharField(widget=forms.PasswordInput)
 
 

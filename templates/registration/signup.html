@@ -52,6 +52,7 @@
       <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
+        <p class="muted">If you leave username blank, we use your email.</p>
         <button type="submit">Create account</button>
       </form>
       <p class="muted">Already have an account? <a href="{% url 'login' %}">Log in</a></p>
