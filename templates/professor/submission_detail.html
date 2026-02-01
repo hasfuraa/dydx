@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Submission Review{% endblock %}
+{% block heading %}Submission Review{% endblock %}
+
+{% block breadcrumbs %}
+  <p class="muted">
+    <a href="{% url 'dashboard' %}">Home</a> /
+    <a href="{% url 'class_detail' class_id=submission.problem.problem_set.course.id %}">{{ submission.problem.problem_set.course.title }}</a> /
+    <a href="{% url 'problem_set_detail' problem_set_id=submission.problem.problem_set.id %}">{{ submission.problem.problem_set.title }}</a> /
+    <a href="{% url 'problem_detail' problem_id=submission.problem.id %}">{{ submission.problem.title }}</a> /
+    Submission
+  </p>
+{% endblock %}
+
+{% block content %}
+  <h2>{{ submission.problem.title }}</h2>
+  <p class="muted">Student: {{ submission.student.email }}</p>
+
+  <h3>Files</h3>
+  <ul>
+    {% for file in files %}
+      <li><a href="{{ file.file.url }}">{{ file.file.name }}</a></li>
+    {% empty %}
+      <li class="muted">No files uploaded.</li>
+    {% endfor %}
+  </ul>
+
+  <h3>Professor Grade</h3>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn" type="submit">Save Grade</button>
+  </form>
+
+  <h3>Rubric</h3>
+  {% if rubric %}
+    <ul>
+      {% for item in rubric.items.all %}
+        <li>{{ item.label }} — {{ item.points }} pts</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endblock %}

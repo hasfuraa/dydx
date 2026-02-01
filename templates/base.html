@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Dashboard{% endblock %}</title>
+    <style>
+      :root {
+        color-scheme: light;
+      }
+      body {
+        font-family: "Georgia", "Times New Roman", serif;
+        margin: 0;
+        background: #f6f3ef;
+        color: #1b1b1b;
+      }
+      header {
+        padding: 20px 32px;
+        background: #1b1b1b;
+        color: #f6f3ef;
+      }
+      header a {
+        color: #f6f3ef;
+        text-decoration: none;
+      }
+      nav {
+        margin-top: 12px;
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      main {
+        padding: 32px;
+      }
+      .grid {
+        display: grid;
+        gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      }
+      .card {
+        background: #fff;
+        border: 1px solid #ddd2c7;
+        border-radius: 10px;
+        padding: 18px;
+      }
+      .muted {
+        color: #6b5f52;
+      }
+      .actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin: 12px 0 0;
+      }
+      .btn {
+        display: inline-block;
+        padding: 8px 12px;
+        border-radius: 6px;
+        background: #1b1b1b;
+        color: #f6f3ef;
+        text-decoration: none;
+      }
+      .btn.secondary {
+        background: #6b5f52;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th, td {
+        text-align: left;
+        padding: 8px;
+        border-bottom: 1px solid #ddd2c7;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>{% block heading %}Dashboard{% endblock %}</h1>
+      <div class="muted">Signed in as {{ user.get_username }}</div>
+      <nav>
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+        {% if user.is_staff %}
+          <a href="{% url 'class_list' %}">My Classes</a>
+        {% else %}
+          <a href="{% url 'student_class_list' %}">My Classes</a>
+        {% endif %}
+        <a href="{% url 'logout' %}">Log out</a>
+      </nav>
+    </header>
+    <main>
+      {% block breadcrumbs %}{% endblock %}
+      {% block content %}{% endblock %}
+    </main>
+  </body>
+</html>

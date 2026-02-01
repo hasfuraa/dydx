@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Delete Problem{% endblock %}
+{% block heading %}Delete Problem{% endblock %}
+
+{% block breadcrumbs %}
+  <p class="muted">
+    <a href="{% url 'dashboard' %}">Home</a> /
+    <a href="{% url 'class_detail' class_id=problem.problem_set.course.id %}">{{ problem.problem_set.course.title }}</a> /
+    <a href="{% url 'problem_set_detail' problem_set_id=problem.problem_set.id %}">{{ problem.problem_set.title }}</a> /
+    <a href="{% url 'problem_detail' problem_id=problem.id %}">{{ problem.title }}</a> /
+    Delete
+  </p>
+{% endblock %}
+
+{% block content %}
+  <h2>{{ problem.title }}</h2>
+  <p class="muted">This will permanently delete the problem and its related data.</p>
+  <form method="post">
+    {% csrf_token %}
+    <button class="btn" type="submit">Confirm delete</button>
+    <a class="btn secondary" href="{% url 'problem_detail' problem_id=problem.id %}">Cancel</a>
+  </form>
+{% endblock %}

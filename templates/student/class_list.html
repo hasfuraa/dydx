@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}My Classes{% endblock %}
+{% block heading %}My Classes{% endblock %}
+
+{% block breadcrumbs %}
+  <p class="muted">
+    <a href="{% url 'dashboard' %}">Home</a> /
+    My Classes
+  </p>
+{% endblock %}
+
+{% block content %}
+  <ul>
+    {% for enrollment in enrollments %}
+      <li><a href="{% url 'student_class_detail' class_id=enrollment.course.id %}">{{ enrollment.course.title }}</a></li>
+    {% empty %}
+      <li class="muted">No classes yet.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

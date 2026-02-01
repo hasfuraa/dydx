@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login</title>
+    <style>
+      body {
+        font-family: "Georgia", "Times New Roman", serif;
+        background: #f6f3ef;
+        color: #1b1b1b;
+        margin: 0;
+        padding: 40px;
+      }
+      .card {
+        max-width: 420px;
+        margin: 60px auto;
+        background: #fff;
+        border: 1px solid #ddd2c7;
+        border-radius: 10px;
+        padding: 24px;
+      }
+      label {
+        display: block;
+        margin-top: 12px;
+      }
+      input {
+        width: 100%;
+        padding: 8px;
+        margin-top: 6px;
+        border: 1px solid #ddd2c7;
+        border-radius: 6px;
+      }
+      button {
+        margin-top: 16px;
+        padding: 8px 12px;
+        border-radius: 6px;
+        border: none;
+        background: #1b1b1b;
+        color: #f6f3ef;
+        cursor: pointer;
+      }
+      .muted {
+        color: #6b5f52;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Sign in</h1>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Log in</button>
+      </form>
+      <p class="muted">Need an account? <a href="{% url 'signup' %}">Sign up</a></p>
+    </div>
+  </body>
+</html>

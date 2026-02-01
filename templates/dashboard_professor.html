@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Professor Dashboard{% endblock %}
+{% block heading %}Professor Dashboard{% endblock %}
+
+{% block content %}
+  <p class="muted">Overview of active classes, submissions, and grading progress.</p>
+  <div class="grid">
+    <section class="card">
+      <h2>Active Classes</h2>
+      {% if class_cards %}
+        {% for card in class_cards %}
+          <p><strong>{{ card.course.title }}</strong> — {{ card.course.term }}</p>
+          <ul>
+            {% for ps in card.problem_sets %}
+              <li>{{ ps.title }}: {{ ps.percent }}% submitted{% if ps.avg_score %} · avg {{ ps.avg_score|floatformat:1 }}{% endif %}</li>
+            {% empty %}
+              <li class="muted">No problem sets yet.</li>
+            {% endfor %}
+          </ul>
+        {% endfor %}
+      {% else %}
+        <p class="muted">No classes yet.</p>
+      {% endif %}
+      <div class="actions">
+        <a class="btn" href="{% url 'class_create' %}">Create class</a>
+        <a class="btn secondary" href="{% url 'class_list' %}">Manage classes</a>
+      </div>
+    </section>
+    <section class="card">
+      <h2>Appeals Queue</h2>
+      <p class="muted">Open appeals: {{ appeals_open }}</p>
+      <div class="actions">
+        <a class="btn secondary" href="{% url 'appeals_list' %}">View appeals</a>
+      </div>
+    </section>
+  </div>
+{% endblock %}

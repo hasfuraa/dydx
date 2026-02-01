@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}{{ problem.title }}{% endblock %}
+{% block heading %}{{ problem.title }}{% endblock %}
+
+{% block breadcrumbs %}
+  <p class="muted">
+    <a href="{% url 'dashboard' %}">Home</a> /
+    <a href="{% url 'student_class_detail' class_id=problem.problem_set.course.id %}">{{ problem.problem_set.course.title }}</a> /
+    <a href="{% url 'student_problem_set_detail' problem_set_id=problem.problem_set.id %}">{{ problem.problem_set.title }}</a> /
+    {{ problem.title }}
+  </p>
+{% endblock %}
+
+{% block content %}
+  <div class="grid">
+    <section class="card">
+      <h2>Problem</h2>
+      {% if problem.prompt_pdf %}
+        <img src="{% url 'problem_prompt_preview' problem_id=problem.id %}" alt="Problem preview" style="width: 100%; border: 1px solid #ddd2c7;" />
+        <p class="muted"><a href="{{ problem.prompt_pdf.url }}">Open PDF in new tab</a></p>
+      {% else %}
+        <p class="muted">No PDF uploaded.</p>
+      {% endif %}
+    </section>
+    <section class="card">
+      <h2>Rubric</h2>
+      {% if rubric %}
+        <ul>
+          {% for item in rubric.items.all %}
+            <li>{{ item.label }} — {{ item.points }} pts</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="muted">No rubric yet.</p>
+      {% endif %}
+    </section>
+  </div>
+
+  <div class="grid" style="margin-top: 20px;">
+    <section class="card">
+      <h2>Your Submission</h2>
+      {% if submission %}
+        <p class="muted">Status: {{ submission.status }}</p>
+        {% if files %}
+          <ul>
+            {% for file in files %}
+              <li>
+                <a href="{{ file.file.url }}">{{ file.file.name }}</a>
+                {% if file.mime_type|slice:":5" == "image" %}
+                  <div><img src="{{ file.file.url }}" alt="Upload preview" style="max-width: 240px; border: 1px solid #ddd2c7; margin-top: 6px;" /></div>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="muted">No files uploaded yet.</p>
+        {% endif %}
+        {% if can_edit %}
+          <div class="actions">
+            <a class="btn secondary" href="{% url 'submission_upload' problem_id=problem.id %}">Upload/Replace Draft</a>
+          </div>
+        {% endif %}
+      {% else %}
+        <p class="muted">No submission yet.</p>
+        <div class="actions">
+          <a class="btn" href="{% url 'submission_upload' problem_id=problem.id %}">Upload Draft</a>
+        </div>
+      {% endif %}
+    </section>
+    <section class="card">
+      <h2>Grade & Feedback</h2>
+      {% if grade %}
+        <p class="muted">Score: {{ grade.score }}</p>
+        <p>{{ grade.feedback|linebreaksbr }}</p>
+        {% if rubric_breakdown %}
+          <h3>Rubric breakdown</h3>
+          <ul>
+            {% for item in rubric_breakdown %}
+              <li>
+                {{ item.label }} — {{ item.score }} pts ({{ item.status }})
+                {% if item.notes %}<div class="muted">{{ item.notes }}</div>{% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+        {% if submission %}
+          <div class="actions">
+            <form method="post" action="{% url 'student_regrade' submission_id=submission.id %}">
+              {% csrf_token %}
+              <button class="btn secondary" type="submit">Regrade with AI</button>
+            </form>
+            <a class="btn secondary" href="{% url 'appeal_create' submission_id=submission.id %}">Appeal</a>
+          </div>
+        {% endif %}
+      {% else %}
+        <p class="muted">No grade yet.</p>
+      {% endif %}
+    </section>
+  </div>
+{% endblock %}

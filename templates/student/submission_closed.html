@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Submissions Closed{% endblock %}
+{% block heading %}Submissions Closed{% endblock %}
+
+{% block breadcrumbs %}
+  <p class="muted">
+    <a href="{% url 'dashboard' %}">Home</a> /
+    <a href="{% url 'student_class_detail' class_id=problem.problem_set.course.id %}">{{ problem.problem_set.course.title }}</a> /
+    <a href="{% url 'student_problem_set_detail' problem_set_id=problem.problem_set.id %}">{{ problem.problem_set.title }}</a> /
+    {{ problem.title }}
+  </p>
+{% endblock %}
+
+{% block content %}
+  <h2>{{ problem.title }}</h2>
+  <p class="muted">{% if message %}{{ message }}{% else %}The due date has passed; submissions are closed.{% endif %}</p>
+{% endblock %}

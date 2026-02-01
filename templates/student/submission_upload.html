@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Draft{% endblock %}
+{% block heading %}Upload Draft{% endblock %}
+
+{% block breadcrumbs %}
+  <p class="muted">
+    <a href="{% url 'dashboard' %}">Home</a> /
+    <a href="{% url 'student_class_detail' class_id=problem.problem_set.course.id %}">{{ problem.problem_set.course.title }}</a> /
+    <a href="{% url 'student_problem_set_detail' problem_set_id=problem.problem_set.id %}">{{ problem.problem_set.title }}</a> /
+    {{ problem.title }}
+  </p>
+{% endblock %}
+
+{% block content %}
+  <h2>{{ problem.title }}</h2>
+  <p class="muted">Upload a PDF or multiple images. You can replace drafts until you finalize submission.</p>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn" type="submit">Save Draft</button>
+  </form>
+  {% if files %}
+    <h3>Current draft files</h3>
+    <ul>
+      {% for file in files %}
+        <li>
+          <a href="{{ file.file.url }}">{{ file.file.name }}</a>
+          {% if file.mime_type|slice:":5" == "image" %}
+            <div><img src="{{ file.file.url }}" alt="Upload preview" style="max-width: 240px; border: 1px solid #ddd2c7; margin-top: 6px;" /></div>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+    <div class="actions">
+      <a class="btn" href="{% url 'submission_finalize' submission_id=submission.id %}">Finalize Submission</a>
+    </div>
+  {% endif %}
+{% endblock %}

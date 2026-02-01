@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Submissions{% endblock %}
+{% block heading %}Submissions{% endblock %}
+
+{% block breadcrumbs %}
+  <p class="muted">
+    <a href="{% url 'dashboard' %}">Home</a> /
+    <a href="{% url 'class_detail' class_id=problem_set.course.id %}">{{ problem_set.course.title }}</a> /
+    <a href="{% url 'problem_set_detail' problem_set_id=problem_set.id %}">{{ problem_set.title }}</a> /
+    Submissions
+  </p>
+{% endblock %}
+
+{% block content %}
+  <h2>{{ problem_set.title }}</h2>
+  <table>
+    <tr>
+      <th>Problem</th>
+      <th>Student</th>
+      <th>Status</th>
+      <th>Score</th>
+      <th></th>
+    </tr>
+    {% for submission in submissions %}
+      <tr>
+        <td>{{ submission.problem.title }}</td>
+        <td>{{ submission.student.email }}</td>
+        <td>{{ submission.status }}</td>
+        <td>{{ submission.final_score }}</td>
+        <td><a class="btn secondary" href="{% url 'submission_detail' submission_id=submission.id %}">Review</a></td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="5" class="muted">No submissions yet.</td></tr>
+    {% endfor %}
+  </table>
+{% endblock %}

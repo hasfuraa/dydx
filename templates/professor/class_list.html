@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}My Classes{% endblock %}
+{% block heading %}My Classes{% endblock %}
+
+{% block breadcrumbs %}
+  <p class="muted">
+    <a href="{% url 'dashboard' %}">Home</a> /
+    My Classes
+  </p>
+{% endblock %}
+
+{% block content %}
+  <div class="actions">
+    <a class="btn" href="{% url 'class_create' %}">Create class</a>
+  </div>
+  <ul>
+    {% for course in classes %}
+      <li><a href="{% url 'class_detail' class_id=course.id %}">{{ course.title }}</a></li>
+    {% empty %}
+      <li class="muted">No classes yet.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

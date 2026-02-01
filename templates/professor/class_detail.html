@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}{{ course.title }}{% endblock %}
+{% block heading %}{{ course.title }}{% endblock %}
+
+{% block breadcrumbs %}
+  <p class="muted">
+    <a href="{% url 'dashboard' %}">Home</a> /
+    {{ course.title }}
+  </p>
+{% endblock %}
+
+{% block content %}
+  <p class="muted">{{ course.term }}</p>
+  <div class="actions">
+    <a class="btn" href="{% url 'problem_set_create' class_id=course.id %}">New problem set</a>
+    <a class="btn secondary" href="{% url 'enrollment_add' class_id=course.id %}">Add student</a>
+  </div>
+
+  <h2>Problem Sets</h2>
+  <ul>
+    {% for ps in problem_sets %}
+      <li><a href="{% url 'problem_set_detail' problem_set_id=ps.id %}">{{ ps.title }}</a></li>
+    {% empty %}
+      <li class="muted">No problem sets yet.</li>
+    {% endfor %}
+  </ul>
+
+  <h2>Enrolled Students</h2>
+  <ul>
+    {% for enrollment in enrollments %}
+      <li>{{ enrollment.user.email }}</li>
+    {% empty %}
+      <li class="muted">No students enrolled yet.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

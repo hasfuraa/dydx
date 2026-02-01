@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Appeal{% endblock %}
+{% block heading %}Appeal{% endblock %}
+
+{% block breadcrumbs %}
+  <p class="muted">
+    <a href="{% url 'dashboard' %}">Home</a> /
+    <a href="{% url 'student_class_detail' class_id=submission.problem.problem_set.course.id %}">{{ submission.problem.problem_set.course.title }}</a> /
+    <a href="{% url 'student_problem_set_detail' problem_set_id=submission.problem.problem_set.id %}">{{ submission.problem.problem_set.title }}</a> /
+    {{ submission.problem.title }} /
+    Appeal
+  </p>
+{% endblock %}
+
+{% block content %}
+  <h2>{{ submission.problem.title }}</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn" type="submit">Submit Appeal</button>
+  </form>
+{% endblock %}

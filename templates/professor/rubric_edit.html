@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Rubric{% endblock %}
+{% block heading %}Edit Rubric{% endblock %}
+
+{% block breadcrumbs %}
+  <p class="muted">
+    <a href="{% url 'dashboard' %}">Home</a> /
+    <a href="{% url 'class_detail' class_id=problem.problem_set.course.id %}">{{ problem.problem_set.course.title }}</a> /
+    <a href="{% url 'problem_set_detail' problem_set_id=problem.problem_set.id %}">{{ problem.problem_set.title }}</a> /
+    <a href="{% url 'problem_detail' problem_id=problem.id %}">{{ problem.title }}</a> /
+    Edit Rubric
+  </p>
+{% endblock %}
+
+{% block content %}
+  <h2>{{ problem.title }}</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    <table>
+      <tr>
+        <th>Label</th>
+        <th>Points</th>
+        <th>Order</th>
+        <th>Delete</th>
+      </tr>
+      {% for form in formset %}
+        <tr>
+          <td>{{ form.label }}</td>
+          <td>{{ form.points }}</td>
+          <td>{{ form.order }}</td>
+          <td>{{ form.DELETE }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+    <button class="btn" type="submit">Save</button>
+  </form>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}{{ problem_set.title }}{% endblock %}
+{% block heading %}{{ problem_set.title }}{% endblock %}
+
+{% block breadcrumbs %}
+  <p class="muted">
+    <a href="{% url 'dashboard' %}">Home</a> /
+    <a href="{% url 'class_detail' class_id=problem_set.course.id %}">{{ problem_set.course.title }}</a> /
+    {{ problem_set.title }}
+  </p>
+{% endblock %}
+
+{% block content %}
+  <div class="actions">
+    <a class="btn" href="{% url 'problem_create' problem_set_id=problem_set.id %}">New problem</a>
+    <a class="btn secondary" href="{% url 'submission_list' problem_set_id=problem_set.id %}">View submissions</a>
+  </div>
+  <ul>
+    {% for problem in problems %}
+      <li>
+        <a href="{% url 'problem_detail' problem_id=problem.id %}">{{ problem.title }}</a>
+        <a class="btn secondary" href="{% url 'problem_delete' problem_id=problem.id %}">Delete</a>
+      </li>
+    {% empty %}
+      <li class="muted">No problems yet.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

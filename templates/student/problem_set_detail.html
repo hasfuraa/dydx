@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}{{ problem_set.title }}{% endblock %}
+{% block heading %}{{ problem_set.title }}{% endblock %}
+
+{% block breadcrumbs %}
+  <p class="muted">
+    <a href="{% url 'dashboard' %}">Home</a> /
+    <a href="{% url 'student_class_detail' class_id=problem_set.course.id %}">{{ problem_set.course.title }}</a> /
+    {{ problem_set.title }}
+  </p>
+{% endblock %}
+
+{% block content %}
+  <ul>
+    {% for row in rows %}
+      <li>
+        <a href="{% url 'student_problem_detail' problem_id=row.problem.id %}">{{ row.problem.title }}</a>
+        {% if row.submission %}
+          <span class="muted">({{ row.submission.status }})</span>
+          {% if row.has_score %}
+            <span class="muted">Score: {{ row.submission.final_score }}</span>
+          {% endif %}
+        {% else %}
+          <span class="muted">(not submitted)</span>
+        {% endif %}
+      </li>
+    {% empty %}
+      <li class="muted">No problems yet.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

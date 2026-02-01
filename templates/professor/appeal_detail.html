@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Appeal{% endblock %}
+{% block heading %}Appeal{% endblock %}
+
+{% block breadcrumbs %}
+  <p class="muted">
+    <a href="{% url 'dashboard' %}">Home</a> /
+    <a href="{% url 'appeals_list' %}">Appeals</a> /
+    {{ appeal.submission.problem.title }}
+  </p>
+{% endblock %}
+
+{% block content %}
+  <h2>{{ appeal.submission.problem.title }}</h2>
+  <p class="muted">Student: {{ appeal.student.email }}</p>
+  <p>{{ appeal.reason }}</p>
+
+  <h3>Messages</h3>
+  <ul>
+    {% for message in appeal.messages.all %}
+      <li><strong>{{ message.author.email }}</strong>: {{ message.message }}</li>
+    {% empty %}
+      <li class="muted">No messages yet.</li>
+    {% endfor %}
+  </ul>
+
+  <h3>Reply</h3>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn" type="submit">Send</button>
+  </form>
+{% endblock %}

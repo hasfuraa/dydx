@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Student Dashboard{% endblock %}
+{% block heading %}Student Dashboard{% endblock %}
+
+{% block content %}
+  <p class="muted">Upcoming work, submissions, and grades.</p>
+  <div class="grid">
+    <section class="card">
+      <h2>Upcoming Deadlines</h2>
+      <ul>
+        {% for ps in upcoming %}
+          <li>
+            <strong>{{ ps.course.title }}</strong> — {{ ps.title }}
+            {% if ps.due_at %}
+              <div class="muted">Due {{ ps.due_at }}</div>
+            {% endif %}
+          </li>
+        {% empty %}
+          <li class="muted">No upcoming deadlines.</li>
+        {% endfor %}
+      </ul>
+    </section>
+    <section class="card">
+      <h2>My Submissions</h2>
+      <p class="muted">You have {{ submissions.count }} submissions.</p>
+      <div class="actions">
+        <a class="btn secondary" href="{% url 'student_class_list' %}">Go to classes</a>
+      </div>
+    </section>
+  </div>
+{% endblock %}

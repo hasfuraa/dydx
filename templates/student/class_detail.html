@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}{{ course.title }}{% endblock %}
+{% block heading %}{{ course.title }}{% endblock %}
+
+{% block breadcrumbs %}
+  <p class="muted">
+    <a href="{% url 'dashboard' %}">Home</a> /
+    {{ course.title }}
+  </p>
+{% endblock %}
+
+{% block content %}
+  <p class="muted">{{ course.term }}</p>
+  <ul>
+    {% for ps in problem_sets %}
+      <li><a href="{% url 'student_problem_set_detail' problem_set_id=ps.id %}">{{ ps.title }}</a></li>
+    {% empty %}
+      <li class="muted">No problem sets yet.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
