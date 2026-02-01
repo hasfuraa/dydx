@@ -49,5 +49,15 @@ High-level steps:
 3. Render will provision Postgres and deploy the web service.
 4. Add your domain and update DNS to point at Render.
 
+### First admin user (Render free tier)
+Render free tier doesn’t include a shell. We bootstrap an admin user at deploy time:
+
+- Set env vars in Render:
+  - `ADMIN_EMAIL`
+  - `ADMIN_PASSWORD`
+  - (optional) `ADMIN_USERNAME`
+- On deploy, `python manage.py bootstrap_admin` creates the first admin.
+- After that, you can remove those env vars if desired.
+
 ## Repository
 https://github.com/hasfuraa/dydx
