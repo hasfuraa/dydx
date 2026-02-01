@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: dydx
+    env: python
+    plan: free
+    buildCommand: ./build.sh
+    startCommand: gunicorn config.wsgi:application
+    autoDeploy: true
+    envVars:
+      - key: DJANGO_DEBUG
+        value: "False"
+      - key: PYTHON_VERSION
+        value: "3.13.4"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: dydx-db
+          property: connectionString
+
+  - type: postgres
+    name: dydx-db
+    plan: free
+    databaseName: dydx
+    user: dydx
+    ipAllowList: []

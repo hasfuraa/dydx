@@ -40,5 +40,14 @@ Then visit:
 - Rubrics are generated from the problem PDF; if the API key is missing, rubric generation will error.
 - Final grades reflect the best AI regrade score.
 
+## Render Deployment (WIP)
+This repo includes `render.yaml` and `build.sh` for a simple Render deploy.
+
+High-level steps:
+1. Push to GitHub.
+2. Create a new Render project and connect the repo.
+3. Render will provision Postgres and deploy the web service.
+4. Add your domain and update DNS to point at Render.
+
 ## Repository
 https://github.com/hasfuraa/dydx
