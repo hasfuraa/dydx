@@ -18,9 +18,8 @@ services:
           name: dydx-db
           property: connectionString
 
-  - type: postgres
-    name: dydx-db
+databases:
+  - name: dydx-db
     plan: free
     databaseName: dydx
     user: dydx
-    ipAllowList: []
