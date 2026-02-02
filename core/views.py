@@ -91,7 +91,7 @@ def signup(request):
             if user_model.objects.filter(email=email).exists():
                 return render(request, 'registration/signup.html', {'form': form, 'error': 'Email already in use.'})
             user = user_model.objects.create_user(username=username, email=email, password=password)
-            login(request, user)
+            login(request, user, backend='core.auth_backends.EmailOrUsernameBackend')
             return redirect('dashboard')
     else:
         form = forms.StudentSignUpForm()
