@@ -138,7 +138,7 @@ class SubmissionFile(models.Model):
 
 class AutoGradeRun(models.Model):
     submission = models.ForeignKey(Submission, on_delete=models.CASCADE, related_name='autograde_runs')
-    rubric = models.ForeignKey(Rubric, on_delete=models.PROTECT)
+    rubric = models.ForeignKey(Rubric, on_delete=models.SET_NULL, null=True, blank=True)
     model = models.CharField(max_length=100)
     raw_output_json = models.JSONField()
     score = models.DecimalField(max_digits=6, decimal_places=2)
@@ -157,7 +157,7 @@ class Grade(models.Model):
     ]
 
     submission = models.ForeignKey(Submission, on_delete=models.CASCADE, related_name='grades')
-    rubric = models.ForeignKey(Rubric, on_delete=models.PROTECT)
+    rubric = models.ForeignKey(Rubric, on_delete=models.SET_NULL, null=True, blank=True)
     score = models.DecimalField(max_digits=6, decimal_places=2)
     feedback = models.TextField(blank=True)
     grader_type = models.CharField(max_length=20, choices=GRADER_CHOICES)
