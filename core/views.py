@@ -382,8 +382,10 @@ def student_problem_set_detail(request, problem_set_id: int):
 @student_required
 def student_problem_detail(request, problem_id: int):
     problem = get_object_or_404(models.Problem, id=problem_id, problem_set__course__enrollments__user=request.user)
-    rubric = services.get_active_rubric(problem)
     submission = models.Submission.objects.filter(problem=problem, student=request.user).first()
+    rubric = None
+    if submission and submission.status != models.Submission.STATUS_DRAFT:
+        rubric = services.get_active_rubric(problem)
     grade = None
     rubric_breakdown = None
     if submission:
