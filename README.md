@@ -59,11 +59,9 @@ Render free tier doesn’t include a shell. We bootstrap an admin user at deploy
 - On deploy, `python manage.py bootstrap_admin` creates the first admin.
 - After that, you can remove those env vars if desired.
 
-### Persistent media (Render disk)
-For the MVP, we use a Render persistent disk mounted at `/var/data` and set:
-- `MEDIA_ROOT=/var/data/media`
-
-This keeps uploads across deploys on the same service instance.
+### Media storage (free tier)
+Render’s free tier has no persistent disk, so uploads will be lost on redeploy.
+For now, re‑upload after each deploy. We can add S3 or a paid disk later.
 
 ## Repository
 https://github.com/hasfuraa/dydx
