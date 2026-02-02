@@ -22,7 +22,9 @@
     <section class="card">
       <h2>Problem PDF</h2>
       {% if problem.prompt_pdf %}
-        <img src="{% url 'problem_prompt_preview' problem_id=problem.id %}" alt="Problem preview" style="width: 100%; border: 1px solid #ddd2c7;" />
+        <object data="{{ problem.prompt_pdf.url }}" type="application/pdf" width="100%" height="420">
+          <img src="{% url 'problem_prompt_preview' problem_id=problem.id %}" alt="Problem preview" style="width: 100%; border: 1px solid #ddd2c7;" />
+        </object>
         <p class="muted"><a href="{{ problem.prompt_pdf.url }}">Open PDF in new tab</a></p>
       {% else %}
         <p class="muted">No PDF uploaded.</p>
