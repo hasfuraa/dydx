@@ -63,6 +63,7 @@
             <a class="btn secondary" href="{% url 'submission_upload' problem_id=problem.id %}">Upload/Replace Draft</a>
             {% if files %}
               <a class="btn" href="{% url 'submission_finalize' submission_id=submission.id %}">Finalize Submission</a>
+              <a class="btn secondary" href="{% url 'submission_delete_draft' submission_id=submission.id %}">Delete Draft</a>
             {% endif %}
           </div>
         {% endif %}

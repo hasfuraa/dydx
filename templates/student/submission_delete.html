@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Delete Draft{% endblock %}
+{% block heading %}Delete Draft{% endblock %}
+
+{% block breadcrumbs %}
+  <p class="muted">
+    <a href="{% url 'dashboard' %}">Home</a> /
+    <a href="{% url 'student_problem_detail' problem_id=submission.problem.id %}">{{ submission.problem.title }}</a> /
+    Delete Draft
+  </p>
+{% endblock %}
+
+{% block content %}
+  <p class="muted">This will remove your current draft upload.</p>
+  <form method="post">
+    {% csrf_token %}
+    <button class="btn" type="submit">Delete Draft</button>
+    <a class="btn secondary" href="{% url 'student_problem_detail' problem_id=submission.problem.id %}">Cancel</a>
+  </form>
+{% endblock %}

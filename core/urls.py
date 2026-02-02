@@ -36,6 +36,7 @@ urlpatterns = [
     path('student/problems/<int:problem_id>/submit/', views.submission_upload, name='submission_upload'),
     path('student/submissions/<int:submission_id>/regrade/', views.student_regrade, name='student_regrade'),
     path('student/submissions/<int:submission_id>/finalize/', views.submission_finalize, name='submission_finalize'),
+    path('student/submissions/<int:submission_id>/delete-draft/', views.submission_delete_draft, name='submission_delete_draft'),
     path('student/submissions/<int:submission_id>/appeal/', views.appeal_create, name='appeal_create'),
     path('student/password-change/', views.student_password_change, name='student_password_change'),
 ]

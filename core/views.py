@@ -490,6 +490,18 @@ def submission_finalize(request, submission_id: int):
     return redirect('student_problem_set_detail', problem_set_id=submission.problem.problem_set_id)
 
 
+@student_required
+def submission_delete_draft(request, submission_id: int):
+    submission = get_object_or_404(models.Submission, id=submission_id, student=request.user)
+    if submission.status != models.Submission.STATUS_DRAFT:
+        return redirect('student_problem_detail', problem_id=submission.problem_id)
+    if request.method == 'POST':
+        submission.files.all().delete()
+        submission.delete()
+        return redirect('student_problem_detail', problem_id=submission.problem_id)
+    return render(request, 'student/submission_delete.html', {'submission': submission})
+
+
 @professor_required
 def submission_list(request, problem_set_id: int):
     ps = get_object_or_404(models.ProblemSet, id=problem_set_id, course__professor=request.user)
