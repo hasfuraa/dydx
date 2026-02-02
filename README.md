@@ -59,5 +59,18 @@ Render free tier doesn’t include a shell. We bootstrap an admin user at deploy
 - On deploy, `python manage.py bootstrap_admin` creates the first admin.
 - After that, you can remove those env vars if desired.
 
+### S3 media storage (required for file persistence)
+Render’s filesystem is ephemeral, so uploaded PDFs/images will disappear on redeploy.
+Configure S3 (or S3-compatible storage) with these env vars:
+
+- `AWS_S3_BUCKET_NAME`
+- `AWS_ACCESS_KEY_ID`
+- `AWS_SECRET_ACCESS_KEY`
+- `AWS_S3_REGION_NAME` (optional if your provider doesn’t require it)
+- `AWS_S3_ENDPOINT_URL` (optional for non-AWS providers like Cloudflare R2)
+- `AWS_S3_PUBLIC_URL` (optional, overrides the public URL for files)
+
+Once set, new uploads will be stored in the bucket and persist across deploys.
+
 ## Repository
 https://github.com/hasfuraa/dydx
