@@ -8,6 +8,7 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('signup/', views.signup, name='signup'),
     path('logout/', views.logout_view, name='logout'),
+    path('prof/admin-reset/', views.admin_password_reset, name='admin_password_reset'),
 
     # Professor routes
     path('prof/classes/', views.class_list, name='class_list'),

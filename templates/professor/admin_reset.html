@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Reset User Password{% endblock %}
+{% block heading %}Reset User Password{% endblock %}
+
+{% block breadcrumbs %}
+  <p class="muted">
+    <a href="{% url 'dashboard' %}">Home</a> /
+    Reset Password
+  </p>
+{% endblock %}
+
+{% block content %}
+  {% if message %}<p class="muted">{{ message }}</p>{% endif %}
+  <form method="post">
+    {% csrf_token %}
+    <label for="email">User Email</label>
+    <input id="email" type="email" name="email" required />
+    <label for="password">New Password</label>
+    <input id="password" type="password" name="password" required />
+    <button class="btn" type="submit">Reset Password</button>
+  </form>
+{% endblock %}

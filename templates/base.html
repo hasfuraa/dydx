@@ -82,6 +82,7 @@
         <a href="{% url 'dashboard' %}">Dashboard</a>
         {% if user.is_staff %}
           <a href="{% url 'class_list' %}">My Classes</a>
+          <a href="{% url 'admin_password_reset' %}">Reset Password</a>
         {% else %}
           <a href="{% url 'student_class_list' %}">My Classes</a>
         {% endif %}

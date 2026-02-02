@@ -104,6 +104,26 @@ def logout_view(request):
 
 
 @professor_required
+def admin_password_reset(request):
+    message = None
+    if request.method == 'POST':
+        email = request.POST.get('email', '').strip().lower()
+        password = request.POST.get('password', '')
+        if not email or not password:
+            message = 'Email and new password are required.'
+        else:
+            user_model = get_user_model()
+            try:
+                user = user_model.objects.get(email=email)
+                user.set_password(password)
+                user.save(update_fields=['password'])
+                message = f'Password reset for {user.email}.'
+            except user_model.DoesNotExist:
+                message = 'No user found with that email.'
+    return render(request, 'professor/admin_reset.html', {'message': message})
+
+
+@professor_required
 def class_list(request):
     classes = models.Class.objects.filter(professor=request.user)
     return render(request, 'professor/class_list.html', {'classes': classes})
