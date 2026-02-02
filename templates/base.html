@@ -85,6 +85,7 @@
           <a href="{% url 'admin_password_reset' %}">Reset Password</a>
         {% else %}
           <a href="{% url 'student_class_list' %}">My Classes</a>
+          <a href="{% url 'student_password_change' %}">Change Password</a>
         {% endif %}
         <a href="{% url 'logout' %}">Log out</a>
       </nav>

@@ -37,4 +37,5 @@ urlpatterns = [
     path('student/submissions/<int:submission_id>/regrade/', views.student_regrade, name='student_regrade'),
     path('student/submissions/<int:submission_id>/finalize/', views.submission_finalize, name='submission_finalize'),
     path('student/submissions/<int:submission_id>/appeal/', views.appeal_create, name='appeal_create'),
+    path('student/password-change/', views.student_password_change, name='student_password_change'),
 ]

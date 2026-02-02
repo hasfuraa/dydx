@@ -2,6 +2,7 @@ from io import BytesIO
 
 from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
 from django.db.models import Avg
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -9,6 +10,7 @@ from django.utils import timezone
 
 from . import forms, models, services
 from .decorators import professor_required, student_required
+from django.contrib.auth.forms import PasswordChangeForm
 
 
 @login_required
@@ -121,6 +123,20 @@ def admin_password_reset(request):
             except user_model.DoesNotExist:
                 message = 'No user found with that email.'
     return render(request, 'professor/admin_reset.html', {'message': message})
+
+
+@student_required
+def student_password_change(request):
+    message = None
+    if request.method == 'POST':
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            message = 'Password updated.'
+    else:
+        form = PasswordChangeForm(user=request.user)
+    return render(request, 'student/password_change.html', {'form': form, 'message': message})
 
 
 @professor_required
