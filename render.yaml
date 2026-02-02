@@ -17,6 +17,12 @@ services:
         fromDatabase:
           name: dydx-db
           property: connectionString
+      - key: MEDIA_ROOT
+        value: "/var/data/media"
+    disk:
+      name: dydx-media
+      mountPath: /var/data
+      sizeGB: 1
 
 databases:
   - name: dydx-db
