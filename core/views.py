@@ -264,7 +264,10 @@ def problem_prompt_preview(request, problem_id: int):
     except ImportError as exc:
         raise Http404('PDF preview unavailable') from exc
 
-    pdf = pdfium.PdfDocument(problem.prompt_pdf.path)
+    try:
+        pdf = pdfium.PdfDocument(problem.prompt_pdf.path)
+    except FileNotFoundError:
+        raise Http404('Prompt PDF not found on server')
     if len(pdf) < 1:
         raise Http404('PDF has no pages')
     page = pdf[0]
