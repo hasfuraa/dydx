@@ -224,6 +224,10 @@ def run_autograde_openai(submission: models.Submission, rubric: models.Rubric) -
         return
 
     images: list[tuple[bytes, str]] = []
+    # Include the problem prompt (if available) before student work.
+    if submission.problem.prompt_pdf and os.path.exists(submission.problem.prompt_pdf.path):
+        images.extend(_file_to_images(submission.problem.prompt_pdf.path))
+
     for submission_file in submission.files.all().order_by('page_number'):
         file_path = submission_file.file.path
         images.extend(_file_to_images(file_path))
